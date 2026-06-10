@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-  const CORRECT_PASSWORD = '271108';
+  // Mật khẩu gốc 271108 đã được mã hóa chuỗi chống xem trộm code F12
+  const ENCRYPTED_PW = "MjcxMTA4"; 
   const MAX_LENGTH = 6;
 
-  const form = document.getElementById('passwordForm');
   const passwordInput = document.getElementById('passwordInput');
   const keypad = document.getElementById('keypad');
+
+  // Tạo hiệu ứng tim bay nhẹ nhàng ở nền ngay khi vào trang
+  createHeartEffects();
 
   function appendValue(number) {
     if (passwordInput.value.length < MAX_LENGTH) {
@@ -18,9 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function checkPassword() {
-    const enteredPassword = passwordInput.value;
-
-    if (enteredPassword === CORRECT_PASSWORD) {
+    if (btoa(passwordInput.value) === ENCRYPTED_PW) {
       passwordInput.classList.add('correct');
       alert('Mật khẩu đúng! Chuẩn bị đón bất ngờ nè!!');
       window.location.href = 'sinhnhat.html';
@@ -28,23 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
       passwordInput.classList.add('incorrect');
       setTimeout(() => {
         passwordInput.classList.remove('incorrect');
-        alert('Mật khẩu sai! Vui lòng thử lại.');
+        alert('Mật khẩu chưa đúng rồi, thử lại nhé!');
         clearPassword();
       }, 500);
-    }
-  }
-
-  function createHeartEffects() {
-    if (document.querySelector('.heart-particle')) return;
-
-    for (let i = 0; i < 30; i++) {
-      const heart = document.createElement('div');
-      heart.classList.add('heart-particle');
-      heart.style.left = `${Math.random() * 100}vw`;
-      heart.style.animationDelay = `${Math.random() * 8}s`;
-      heart.style.animationDuration = `${Math.random() * 5 + 5}s`;
-      heart.style.backgroundColor = `hsl(${Math.random() * 20 + 330}, 80%, ${Math.random() * 20 + 60}%)`;
-      document.body.appendChild(heart);
     }
   }
 
@@ -59,13 +45,19 @@ document.addEventListener('DOMContentLoaded', () => {
       appendValue(value);
     } else if (action === 'clear') {
       clearPassword();
+    } else if (action === 'submit') {
+      checkPassword();
     }
   });
 
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    checkPassword();
-  });
-
-  createHeartEffects();
+  function createHeartEffects() {
+    for (let i = 0; i < 20; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart-particle');
+      heart.style.left = `${Math.random() * 100}vw`;
+      heart.style.animationDelay = `${Math.random() * 5}s`;
+      heart.style.animationDuration = `${Math.random() * 4 + 4}s`;
+      document.body.appendChild(heart);
+    }
+  }
 });
