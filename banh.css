@@ -117,7 +117,7 @@ body::after {
 
 .slider {
   position: absolute;
-  top: 10%;
+  top: 12%;
   left: 50%;
   width: 200px;
   height: 250px;
@@ -131,23 +131,18 @@ body::after {
 
 .slider:not(.hidden) {
   opacity: 1;
-  display: block; /* Đảm bảo hiển thị khi không còn hidden */
+  display: block;
 }
 
 @keyframes autoRun {
-  from {
-    transform: translateX(-50%) perspective(1000px) rotateX(-16deg) rotateY(0deg);
-  }
-  to {
-    transform: translateX(-50%) perspective(1000px) rotateX(-16deg) rotateY(360deg);
-  }
+  from { transform: translateX(-50%) perspective(1000px) rotateX(-16deg) rotateY(0deg); }
+  to { transform: translateX(-50%) perspective(1000px) rotateX(-16deg) rotateY(360deg); }
 }
 
 .slider .item {
   position: absolute;
   inset: 0;
-  transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg))
-             translateZ(550px);
+  transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(550px);
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
@@ -199,48 +194,35 @@ body::after {
 
 /* Responsive: ≤ 1000px */
 @media screen and (max-width: 1000px) {
-  #hbdText {
-    bottom: 260px;
-    font-size: 2.2em;
-  }
-
-  .slider {
-    width: 160px;
-    height: 200px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .slider .item {
-    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg))
-               translateZ(300px);
-  }
-
-  .cake {
-    width: 240px;
-    height: 240px;
-  }
+  #hbdText { bottom: 260px; font-size: 2.2em; }
+  .slider { width: 160px; height: 200px; }
+  .slider .item { transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(300px); }
+  .cake { width: 240px; height: 240px; }
 }
 
-/* Responsive: ≤ 700px */
+/* Responsive: ≤ 700px (Mobile đã tối ưu hoàn chỉnh) */
 @media screen and (max-width: 700px) {
   #hbdText {
-    bottom: 200px;
-    font-size: 1.8em;
+    bottom: 210px;
+    font-size: 1.6em;
+    padding: 0 10px;
   }
 
   .slider {
-    width: 100px;
+    width: 90px;
     height: 120px;
+    top: 15%;
   }
 
   .slider .item {
-    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg))
-               translateZ(180px);
+    /* Đẩy rộng không gian 3D lên 220px để chống dính các ảnh vào nhau trên mobile */
+    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(220px);
+    box-shadow: 0 0 15px rgba(255, 102, 178, 0.6);
   }
 
   .cake {
-    width: 180px;
-    height: 180px;
+    width: 160px;
+    height: 160px;
+    bottom: 15px;
   }
 }
