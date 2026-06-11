@@ -1,20 +1,21 @@
 @import url('https://fonts.cdnfonts.com/css/ica-rubrik-black');
 @import url('https://fonts.cdnfonts.com/css/poppins');
 
-/* Reset */
+/* Reset cơ bản */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Body Styles */
+/* Nền hiển thị */
 body {
   background-color: #000;
   position: relative;
   font-family: 'Poppins', sans-serif;
   overflow: hidden;
-  touch-action: none; /* Chống giật màn hình khi vuốt trên điện thoại */
+  height: 100vh;
+  width: 100vw;
 }
 
 body::before {
@@ -35,7 +36,7 @@ body::before {
   100% { background-position: 0% 50%; }
 }
 
-/* Khung Banner chính */
+/* Khung cấu trúc chính */
 .banner {
   width: 100%;
   height: 100vh;
@@ -43,12 +44,12 @@ body::before {
   position: relative;
   overflow: hidden;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  perspective: 1200px; /* Tăng độ sâu 3D sắc nét */
 }
 
-/* Nút mở quà gốc của bạn - được thêm hiệu ứng lắc lư lôi cuốn */
+/* Nút mở quà ban đầu */
 #giftBtn {
   padding: 15px 35px;
   font-size: 1.2rem;
@@ -69,16 +70,30 @@ body::before {
   50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(255, 60, 172, 0.9); }
 }
 
-/* Vòng xoay ảnh Slider 3D - Đã fix lỗi đè ảnh trên Mobile */
+/* TIÊU ĐỀ NEON: Fix vị trí cố định phía trên */
+#hbdText {
+  position: absolute;
+  top: 8%;
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: bold;
+  width: 90%;
+  text-shadow: 0 0 10px #ff3cac, 0 0 20px #ff3cac;
+  z-index: 20;
+  text-align: center;
+}
+
+/* VÒNG XOAY 3D: Giới hạn không gian tạo độ sâu chuẩn không lỗi giao diện */
 .slider {
   position: absolute;
-  width: 150px;
-  height: 200px;
-  top: 30%;
+  width: 130px; /* Kích thước ảnh trên Mobile */
+  height: 170px;
+  top: 28%;
   transform-style: preserve-3d;
   animation: rotation 25s linear infinite;
   z-index: 10;
-  will-change: transform; /* Ép điện thoại dùng card đồ họa để xử lý mượt */
+  perspective: 1000px; /* Khóa góc nhìn 3D trực tiếp tại đây */
+  will-change: transform;
 }
 
 @keyframes rotation {
@@ -86,44 +101,33 @@ body::before {
   to { transform: rotateY(360deg); }
 }
 
+/* Căn khoảng cách vòng xoay ảnh lùi ra xa để không đè màn hình */
 .slider .item {
   position: absolute;
   inset: 0;
-  transform: rotateY(calc( (var(--position) - 1) * (360deg / var(--quantity)) )) translateZ(280px);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden; /* Fix lỗi nhấp nháy ảnh trên Safari iPhone */
+  transform: rotateY(calc( (var(--position) - 1) * (360deg / var(--quantity)) )) translateZ(230px); /* Đưa độ rộng vòng xoay về 230px vừa vặn mobile */
 }
 
 .slider .item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 12px;
-  border: 2px solid rgba(255,255,255,0.6);
-  box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
 
-/* Chữ chúc mừng Neon */
-#hbdText {
-  position: absolute;
-  top: 10%;
-  color: #fff;
-  font-size: 1.8rem;
-  font-weight: bold;
-  width: 90%;
-  text-shadow: 0 0 10px #ff3cac, 0 0 20px #ff3cac;
-  z-index: 20;
-}
-
-/* Bánh sinh nhật chuẩn tọa độ không lo lệch dòng máy */
+/* BÁNH KEM: Đưa xuống đáy màn hình gọn gàng */
 .cake {
   position: absolute;
   bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
   width: 220px;
   height: 220px;
   object-fit: contain;
   z-index: 15;
-  transition: all 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
 }
 
 #fireworks {
@@ -139,16 +143,26 @@ body::before {
   opacity: 0;
 }
 
-/* Tự động co giãn mượt mà khi xem trên máy tính lớn (PC) */
+/* ĐÁP ỨNG GIAO DIỆN MÁY TÍNH (PC / MÀN HÌNH LỚN) */
 @media screen and (min-width: 768px) {
+  #hbdText {
+    font-size: 2.8rem;
+    top: 10%;
+  }
+  
   .slider {
-    width: 200px;
-    height: 250px;
+    width: 180px;
+    height: 230px;
     top: 25%;
   }
+  
   .slider .item {
-    transform: rotateY(calc( (var(--position) - 1) * (360deg / var(--quantity)) )) translateZ(380px);
+    transform: rotateY(calc( (var(--position) - 1) * (360deg / var(--quantity)) )) translateZ(320px); /* PC rộng hơn nên đẩy vòng xoay ra 320px */
   }
-  #hbdText { font-size: 3rem; }
-  .cake { width: 320px; height: 320px; bottom: 5%; }
+  
+  .cake {
+    width: 300px;
+    height: 300px;
+    bottom: 3%;
+  }
 }
