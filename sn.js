@@ -20,23 +20,23 @@ function createHearts() {
 
 function applyWordTypingAnimation() {
   const paragraphs = document.querySelectorAll('.letter p:not(.signature)');
-  let totalDelay = 1.5;
-  let totalWords = 0;
+  let totalDelay = 1.2; 
 
   paragraphs.forEach((p) => {
     const text = p.textContent.trim();
+    // Tách từ chuẩn xác kể cả các cụm từ tiếng Việt có dấu phức tạp
     const words = text.split(/\s+/);
     p.innerHTML = words
-      .map((word, index) => `<span class="word" style="animation-delay: ${totalDelay + index * 0.2}s">${word}</span>`)
+      .map((word, index) => `<span class="word" style="animation-delay: ${totalDelay + index * 0.15}s">${word}</span>`)
       .join(' ');
-    totalDelay += words.length * 0.2;
-    totalWords += words.length;
+    totalDelay += words.length * 0.15 + 0.2; // Tạo khoảng nghỉ ngắn giữa các dòng
   });
 
+  // Hiển thị chữ ký và nút chuyển trang sau khi dòng chữ cuối cùng chạy xong
   setTimeout(() => {
     document.getElementById('signature').classList.add('show');
     document.getElementById('nextButton').classList.add('show');
-  }, totalDelay * 1000 + 500);
+  }, totalDelay * 1000);
 }
 
 const envelope = document.getElementById('envelope');
@@ -57,6 +57,7 @@ document.getElementById('nextButton').addEventListener('click', function () {
 window.onload = function () {
   createHearts();
   applyWordTypingAnimation();
+  // Tự động hé mở phong bì nhẹ nhàng sau 1.2s
   setTimeout(() => {
     envelope.classList.remove('closed');
   }, 1200);
