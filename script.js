@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const CORRECT_PASSWORD = '271108';
+  const CORRECT_PASSWORD = '110699';
   const MAX_LENGTH = 6;
 
   const form = document.getElementById('passwordForm');
