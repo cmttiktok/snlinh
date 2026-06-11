@@ -2,7 +2,8 @@
   --pink-glow-1: rgba(255, 102, 178, 0.8);
   --pink-glow-2: rgba(255, 102, 178, 0.5);
   --pink-strong: #ff66b2;
-  --bg-white-trans: rgba(255, 255, 255, 0.9);
+  --bg-glass: rgba(255, 255, 255, 0.15);
+  --border-glass: rgba(255, 255, 255, 0.25);
 }
 
 body {
@@ -41,6 +42,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: var(--bg-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border-glass);
+  padding: 30px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .password-form__title {
@@ -55,39 +63,47 @@ body {
 .password-form__avatar {
   width: 200px;
   height: 200px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   object-fit: cover;
   animation: bounceAvatar 3s ease-in-out infinite;
 }
 
 .password-form__avatar:hover {
-  transform: scale(1.1) rotate(5deg);
+  transform: scale(1.08) rotate(3deg);
   box-shadow: 0 0 30px rgba(255, 102, 178, 0.7);
 }
 
 .password-form__input {
   width: 220px;
   padding: 12px;
-  font-size: 18px;
+  font-size: 20px;
   letter-spacing: 0.2em;
-  margin-bottom: 15px;
-  border: 2px solid #fff;
-  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
   text-align: center;
-  background-color: var(--bg-white-trans);
+  background-color: rgba(255, 255, 255, 0.85);
   transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.password-form__input:focus {
+  outline: none;
+  border-color: var(--pink-strong);
+  box-shadow: 0 0 15px var(--pink-strong);
 }
 
 .password-form__input.incorrect {
   border-color: #f44336;
+  background-color: #ffebee;
   animation: shake 0.5s ease;
 }
 
 .password-form__input.correct {
   border-color: #4CAF50;
+  background-color: #e8f5e9;
   animation: pulseInput 1.5s ease-in-out infinite;
 }
 
@@ -95,59 +111,51 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
-  margin-bottom: 15px;
 }
 
 .keypad__button {
   width: 60px;
   height: 60px;
   font-size: 20px;
-  border: none;
-  background-color: var(--bg-white-trans);
-  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 50%; /* Chuyển thành nút tròn sang trọng giống iOS */
   cursor: pointer;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease;
 }
 
 .keypad__button:hover {
   background-color: var(--pink-strong);
   color: white;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(255, 102, 178, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 102, 178, 0.5);
 }
 
 .keypad__button:active {
   transform: translateY(0);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 .keypad__button--clear {
-  background-color: var(--pink-strong);
+  background-color: #ff4d4d;
   color: white;
-  grid-column: 1;
 }
 
-.keypad__button[data-value="0"] {
-  grid-column: 2;
+.keypad__button--clear:hover {
+  background-color: #ff1a1a;
+  box-shadow: 0 6px 15px rgba(255, 26, 26, 0.4);
 }
 
 .keypad__button--submit {
-  background-color: var(--pink-strong);
+  background-color: #4CAF50;
   color: white;
-  border-radius: 50%;
-  box-shadow: 0 5px 15px rgba(255, 102, 178, 0.5);
   animation: glowSubmit 2s ease-in-out infinite;
-  grid-column: 3;
 }
 
 .keypad__button--submit:hover {
-  transform: scale(1.2) rotate(10deg);
-  box-shadow: 0 0 30px rgba(255, 102, 178, 0.8);
-}
-
-.keypad__button--submit:active {
-  transform: scale(0.95);
+  background-color: #45a049;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.7);
 }
 
 @keyframes gradientBG {
@@ -163,12 +171,12 @@ body {
 
 @keyframes bounceAvatar {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-8px); }
 }
 
 @keyframes pulseInput {
-  0%, 100% { box-shadow: 0 0 20px rgba(255, 102, 178, 0.8); border-color: #4CAF50;}
-  50% { box-shadow: 0 0 30px rgba(255, 102, 178, 1); border-color: #4CAF50;}
+  0%, 100% { box-shadow: 0 0 15px rgba(76, 175, 80, 0.6); }
+  50% { box-shadow: 0 0 25px rgba(76, 175, 80, 1); }
 }
 
 @keyframes shake {
@@ -178,8 +186,8 @@ body {
 }
 
 @keyframes glowSubmit {
-  0%, 100% { box-shadow: 0 0 15px rgba(255, 102, 178, 0.5); }
-  50% { box-shadow: 0 0 25px rgba(255, 102, 178, 0.9); }
+  0%, 100% { box-shadow: 0 0 10px rgba(76, 175, 80, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.8); }
 }
 
 .heart-particle {
@@ -196,44 +204,21 @@ body {
 }
 
 @keyframes floatHeart {
-  from {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0.8;
-  }
-  to {
-    transform: translateY(105vh) rotate(360deg);
-    opacity: 0;
-  }
+  from { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+  to { transform: translateY(105vh) rotate(360deg); opacity: 0; }
 }
 
 @media (max-width: 768px) {
   .password-form {
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
   }
-
   .password-form__avatar {
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
   }
-
-  .password-form__title {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-
-  .password-form__input {
-    width: 200px;
-  }
-
-  .keypad {
-    gap: 10px;
-  }
-
-  .keypad__button {
-    width: 55px;
-    height: 55px;
-    font-size: 18px;
+  .password-form__main {
+    padding: 20px;
   }
 }
 
