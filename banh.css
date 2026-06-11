@@ -1,32 +1,32 @@
 @import url('https://fonts.cdnfonts.com/css/ica-rubrik-black');
 @import url('https://fonts.cdnfonts.com/css/poppins');
 
-/* Reset cơ bản */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Nền hiển thị */
+/* Body Styles */
 body {
   background-color: #000;
   position: relative;
   font-family: 'Poppins', sans-serif;
   overflow: hidden;
-  height: 100vh;
-  width: 100vw;
 }
 
 body::before {
   content: '';
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: linear-gradient(45deg, #ff3cac, #784ba0, #2b86c5, #ff3cac);
   background-size: 400%;
   animation: gradientBG 15s ease infinite;
-  opacity: 0.25;
+  opacity: 0.2;
   z-index: -1;
 }
 
@@ -36,76 +36,114 @@ body::before {
   100% { background-position: 0% 50%; }
 }
 
-/* Khung cấu trúc chính */
+/* Hạt lấp lánh */
+body::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://www.transparenttextures.com/patterns/stardust.png');
+  opacity: 0.15;
+  z-index: -1;
+  animation: sparkle 5s ease infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.25; }
+}
+
+/* Banner Section */
 .banner {
+  position: relative;
   width: 100%;
   height: 100vh;
   text-align: center;
-  position: relative;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
-/* Nút mở quà ban đầu */
+/* Button */
 #giftBtn {
-  padding: 15px 35px;
-  font-size: 1.2rem;
-  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  background: linear-gradient(45deg, #ff3cac, #784ba0, #2b86c5);
   color: white;
-  background: linear-gradient(45deg, #ff3cac, #ff66b2);
   border: none;
-  border-radius: 50px;
+  padding: 20px 40px;
+  border-radius: 15px;
   cursor: pointer;
-  box-shadow: 0 0 20px rgba(255, 60, 172, 0.6);
-  z-index: 100;
-  animation: boxShake 1.5s infinite ease-in-out;
-  -webkit-tap-highlight-color: transparent;
+  z-index: 10;
+  box-shadow: 0 0 20px #fff;
+  animation: pulse 2s infinite;
 }
 
-@keyframes boxShake {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(255, 60, 172, 0.9); }
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
+  100% { transform: translate(-50%, -50%) scale(1); }
 }
 
-/* TIÊU ĐỀ NEON: Fix vị trí cố định phía trên */
+/* Text chúc mừng */
 #hbdText {
   position: absolute;
-  top: 8%;
-  color: #fff;
-  font-size: 1.6rem;
-  font-weight: bold;
-  width: 90%;
-  text-shadow: 0 0 10px #ff3cac, 0 0 20px #ff3cac;
-  z-index: 20;
+  bottom: 380px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
   text-align: center;
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 5;
+  text-shadow: 0 0 15px #ff0, 0 0 25px #f0f;
+  animation: glow 3s ease-in-out infinite;
 }
 
-/* VÒNG XOAY 3D: Giới hạn không gian tạo độ sâu chuẩn không lỗi giao diện */
+#hbdText:not(.hidden) {
+  opacity: 1;
+}
+
+@keyframes glow {
+  0%, 100% { text-shadow: 0 0 15px #ff0, 0 0 25px #f0f; }
+  50% { text-shadow: 0 0 25px #ff0, 0 0 35px #f0f, 0 0 45px #0ff; }
+}
+
 .slider {
   position: absolute;
-  width: 130px; /* Kích thước ảnh trên Mobile */
-  height: 170px;
-  top: 28%;
+  top: 12%;
+  left: 50%;
+  width: 200px;
+  height: 250px;
   transform-style: preserve-3d;
-  animation: rotation 25s linear infinite;
-  z-index: 10;
-  perspective: 1000px; /* Khóa góc nhìn 3D trực tiếp tại đây */
-  will-change: transform;
+  transform-origin: center center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out 0.2s;
+  animation: autoRun 20s linear infinite;
+  z-index: 2;
 }
 
-@keyframes rotation {
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(360deg); }
+.slider:not(.hidden) {
+  opacity: 1;
+  display: block;
 }
 
-/* Căn khoảng cách vòng xoay ảnh lùi ra xa để không đè màn hình */
+@keyframes autoRun {
+  from { transform: translateX(-50%) perspective(1000px) rotateX(-16deg) rotateY(0deg); }
+  to { transform: translateX(-50%) perspective(1000px) rotateX(-16deg) rotateY(360deg); }
+}
+
 .slider .item {
   position: absolute;
   inset: 0;
-  transform: rotateY(calc( (var(--position) - 1) * (360deg / var(--quantity)) )) translateZ(230px); /* Đưa độ rộng vòng xoay về 230px vừa vặn mobile */
+  transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(550px);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
 .slider .item img {
@@ -113,56 +151,78 @@ body::before {
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
 
-/* BÁNH KEM: Đưa xuống đáy màn hình gọn gàng */
+/* Bánh sinh nhật */
 .cake {
   position: absolute;
-  bottom: 5%;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 220px;
-  height: 220px;
+  width: 360px;
+  height: 360px;
   object-fit: contain;
-  z-index: 15;
-  transition: opacity 1s ease-in-out;
+  opacity: 0;
+  transition: opacity 1s ease-in-out 0.4s, transform 0.5s ease-in-out;
 }
 
+.cake:not(.hidden) {
+  opacity: 1;
+  animation: bounce 0.5s ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-20px); }
+}
+
+/* Pháo hoa */
 #fireworks {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  z-index: 2;
+  z-index: 0;
 }
 
+/* Utility class */
 .hidden {
-  display: none !important;
-  opacity: 0;
+  display: none;
 }
 
-/* ĐÁP ỨNG GIAO DIỆN MÁY TÍNH (PC / MÀN HÌNH LỚN) */
-@media screen and (min-width: 768px) {
+/* Responsive: ≤ 1000px */
+@media screen and (max-width: 1000px) {
+  #hbdText { bottom: 260px; font-size: 2.2em; }
+  .slider { width: 160px; height: 200px; }
+  .slider .item { transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(300px); }
+  .cake { width: 240px; height: 240px; }
+}
+
+/* Responsive: ≤ 700px (Mobile đã tối ưu hoàn chỉnh) */
+@media screen and (max-width: 700px) {
   #hbdText {
-    font-size: 2.8rem;
-    top: 10%;
+    bottom: 210px;
+    font-size: 1.6em;
+    padding: 0 10px;
   }
-  
+
   .slider {
-    width: 180px;
-    height: 230px;
-    top: 25%;
+    width: 90px;
+    height: 120px;
+    top: 15%;
   }
-  
+
   .slider .item {
-    transform: rotateY(calc( (var(--position) - 1) * (360deg / var(--quantity)) )) translateZ(320px); /* PC rộng hơn nên đẩy vòng xoay ra 320px */
+    /* Đẩy rộng không gian 3D lên 220px để chống dính các ảnh vào nhau trên mobile */
+    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(220px);
+    box-shadow: 0 0 15px rgba(255, 102, 178, 0.6);
   }
-  
+
   .cake {
-    width: 300px;
-    height: 300px;
-    bottom: 3%;
+    width: 160px;
+    height: 160px;
+    bottom: 15px;
   }
 }
