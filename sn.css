@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   background: linear-gradient(135deg, #ffe6f0, #ffccde);
   margin: 0;
   padding: 20px;
@@ -38,11 +38,11 @@ body {
 .envelope {
   position: relative;
   width: 90vw;
-  max-width: 400px;
-  height: 280px;
+  max-width: 420px;
+  height: 300px;
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 12px 35px rgba(221, 114, 145, 0.3);
   cursor: pointer;
 }
 
@@ -53,7 +53,7 @@ body {
   width: 100%;
   height: 100%;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 16px;
   transform-origin: top;
   transition: transform 1s ease;
   z-index: 2;
@@ -85,13 +85,15 @@ body {
   left: 15px;
   right: 15px;
   bottom: 15px;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 20px;
-  border-radius: 8px;
+  /* Màu nền giấy thư trắng kem mềm mại phối với màu nền hồng */
+  background: #fffdf9; 
+  padding: 25px 20px;
+  border-radius: 12px;
   overflow-y: auto;
   opacity: 0;
   transition: opacity 0.5s ease 0.4s;
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+  box-shadow: inset 0 0 15px rgba(217, 83, 79, 0.05), 0 4px 10px rgba(0, 0, 0, 0.05);
+  border: 1px dashed rgba(217, 83, 79, 0.2);
 }
 
 .envelope:not(.closed) .letter {
@@ -99,21 +101,23 @@ body {
 }
 
 h1 {
-  color: #d9534f;
+  color: #c93b3b;
   text-align: center;
-  font-family: 'Caveat', cursive;
-  font-size: 26px;
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
   margin-top: 0;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
 }
 
 p {
-  line-height: 1.6;
-  font-size: 15px;
-  color: #444;
-  margin: 8px 0;
-  font-family: 'Caveat', cursive;
-  font-size: 18px;
+  line-height: 1.8;
+  font-size: 14px;
+  color: #5c2d2d; /* Màu nâu đỏ ấm áp, nhìn rất thơ mộng và không bị chói */
+  margin: 10px 0;
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 500;
 }
 
 p .word {
@@ -126,12 +130,13 @@ p .word {
 
 .signature {
   text-align: right;
-  font-size: 18px;
-  margin-top: 15px;
+  font-size: 20px;
+  margin-top: 20px;
   font-family: 'Dancing Script', cursive;
-  color: #d9534f;
+  color: #c93b3b;
   opacity: 0;
   transition: opacity 1s ease;
+  line-height: 1.4;
 }
 
 .signature.show {
@@ -139,19 +144,20 @@ p .word {
 }
 
 .next-button {
-  margin-top: 25px;
-  padding: 12px 28px;
-  background-color: #d9534f;
+  margin-top: 30px;
+  padding: 12px 35px;
+  background-color: #c93b3b;
   color: white;
   border: none;
-  border-radius: 20px;
-  font-size: 16px;
+  border-radius: 25px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 15px;
   font-weight: bold;
   cursor: pointer;
   opacity: 0;
   transform: scale(0.9);
   transition: all 0.5s ease;
-  box-shadow: 0 4px 15px rgba(217, 83, 79, 0.4);
+  box-shadow: 0 6px 20px rgba(201, 59, 59, 0.4);
 }
 
 .next-button.show {
@@ -161,16 +167,25 @@ p .word {
 
 .next-button:hover {
   transform: scale(1.05);
-  background-color: #c9302c;
-  box-shadow: 0 6px 20px rgba(217, 83, 79, 0.6);
+  background-color: #b22c2c;
+  box-shadow: 0 8px 25px rgba(201, 59, 59, 0.6);
 }
 
 @keyframes wordTyping {
   to { opacity: 1; transform: translateX(0); }
 }
 
+/* Thanh cuộn nhỏ xinh tinh tế cho nội dung thư */
+.letter::-webkit-scrollbar {
+  width: 4px;
+}
+.letter::-webkit-scrollbar-thumb {
+  background: rgba(201, 59, 59, 0.2);
+  border-radius: 10px;
+}
+
 @media (max-width: 600px) {
-  .envelope { width: 85vw; height: 260px; }
-  h1 { font-size: 22px; }
-  p { font-size: 16px; }
+  .envelope { width: 85vw; height: 280px; }
+  h1 { font-size: 18px; }
+  p { font-size: 13px; line-height: 1.7; }
 }
