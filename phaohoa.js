@@ -12,37 +12,35 @@ function startFireworks(canvas) {
   let particles = [];
 
   function createFirework() {
-    // Pháo bắn lên từ giữa màn hình và nổ ngẫu nhiên tầm cao
     const x = Math.random() * canvas.width;
     const y = Math.random() * (canvas.height * 0.4) + (canvas.height * 0.1);
     const colors = ['#ff0055', '#00ffcc', '#ffcc00', '#ff00ff', '#00ff00', '#ffffff'];
-    const pCount = 60;
+    const pCount = 50;
     
     for (let i = 0; i < pCount; i++) {
-      const angle = (Math.PI * 2 / pCount) * i + Math.random() * 0.5;
+      const angle = (Math.PI * 2 / pCount) * i;
       const speed = Math.random() * 3 + 2;
       particles.push({
         x, y,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
         alpha: 1,
-        gravity: 0.04, // Tạo độ rơi vật lý cho hạt pháo
+        gravity: 0.05,
         color: colors[Math.floor(Math.random() * colors.length)]
       });
     }
   }
 
   function update() {
-    // Tạo hiệu ứng đuôi nhạt dần (trails) bằng cách phủ nhẹ màu mờ thay vì xóa hoàn toàn
-    ctx.fillStyle = 'rgba(13, 13, 13, 0.15)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'; // Tạo hiệu ứng đuôi mờ lấp lánh cực đẹp
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     for (let i = particles.length - 1; i >= 0; i--) {
       const p = particles[i];
       p.x += p.vx;
       p.y += p.vy;
-      p.vy += p.gravity; // Pháo rơi cong xuống nhẹ
-      p.alpha -= 0.012;
+      p.vy += p.gravity;
+      p.alpha -= 0.015;
 
       if (p.alpha <= 0) {
         particles.splice(i, 1);
@@ -57,7 +55,7 @@ function startFireworks(canvas) {
       }
     }
 
-    if (Math.random() < 0.04 && particles.length < 300) createFirework();
+    if (Math.random() < 0.05 && particles.length < 400) createFirework();
     requestAnimationFrame(update);
   }
 
@@ -65,34 +63,32 @@ function startFireworks(canvas) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const giftBox = document.getElementById('gift-box-container');
+  // Trỏ chính xác về ID gốc giftBtn của bạn để không lo lỗi kẹt code
+  const giftBtn = document.getElementById('giftBtn');
   const slider = document.querySelector('.slider');
   const hbdText = document.getElementById('hbdText');
   const cake = document.querySelector('.cake');
   const audio = document.getElementById('birthday-audio');
   const canvas = document.getElementById('fireworks');
 
-  giftBox.addEventListener('click', () => {
-    // Kích hoạt nắp mở và biến mất hộp quà
-    giftBox.classList.add('open');
-    
-    setTimeout(() => {
-      giftBox.style.display = 'none';
+  if (giftBtn) {
+    giftBtn.addEventListener('click', () => {
+      giftBtn.style.display = 'none';
       
-      // Cho chữ, bánh và slider ảnh xuất hiện nhịp nhàng liền mạch
-      hbdText.classList.remove('hidden');
-      slider.classList.remove('hidden');
-      cake.classList.remove('hidden');
+      // Kích hoạt hiển thị đồng bộ bảo vệ layout
+      if (hbdText) hbdText.classList.remove('hidden');
+      if (slider) slider.classList.remove('hidden');
+      if (cake) cake.classList.remove('hidden');
 
-      // Phát nhạc nền lập tức
-      audio.play().catch(() => {
-        console.log("Trình duyệt chặn tự động phát, cần tương tác người dùng.");
-      });
+      // Phát nhạc sinh nhật
+      if (audio) {
+        audio.play().catch((err) => console.log("Chặn phát tự động: ", err));
+      }
 
-      // Bật pháo hoa khủng
-      if (typeof startFireworks === 'function') {
+      // Kích hoạt pháo hoa
+      if (canvas) {
         startFireworks(canvas);
       }
-    }, 500);
-  });
+    });
+  }
 });
