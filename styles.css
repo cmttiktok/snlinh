@@ -1,13 +1,16 @@
 :root {
-  --pink-glow: #ff66b2;
-  --bg-trans: rgba(255, 255, 255, 0.15);
+  --pink-glow-1: rgba(255, 102, 178, 0.8);
+  --pink-glow-2: rgba(255, 102, 178, 0.4);
+  --pink-strong: #ff66b2;
+  --bg-white-trans: rgba(255, 255, 255, 0.12); /* Hiệu ứng kính mờ sang trọng */
 }
 
+/* Toàn bộ nền màn hình khóa */
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: linear-gradient(45deg, #ff99cc, #ff66b2, #ffb3d9, #ffe6f0);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(45deg, #1a0933, #4a154b, #0a1128); /* Nền tối làm nổi bật Neon */
   background-size: 400%;
   display: flex;
   justify-content: center;
@@ -15,7 +18,6 @@ body {
   min-height: 100vh;
   overflow: hidden;
   animation: gradientBG 12s ease infinite;
-  touch-action: none;
 }
 
 @keyframes gradientBG {
@@ -26,114 +28,197 @@ body {
 
 .lock-screen {
   width: 100%;
-  max-width: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
   box-sizing: border-box;
 }
 
+/* FORM CHÍNH: Fix lỗi bung kích thước, gom gọn gàng */
 .password-form {
-  background: var(--bg-trans);
+  background: var(--bg-white-trans);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 30px;
   border-radius: 24px;
-  padding: 30px 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Chuyển thành hàng dọc trên mobile cho cân đối */
   align-items: center;
-  gap: 20px;
+  justify-content: center;
+  gap: 25px;
   width: 100%;
+  max-width: 400px; /* Giới hạn độ rộng tối đa không cho vỡ khung */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), 0 0 20px var(--pink-glow-2);
+  text-align: center;
 }
 
+/* Ảnh đại diện tròn trịa xinh xắn */
 .password-form__avatar {
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  border: 3px solid #fff;
   object-fit: cover;
-  box-shadow: 0 0 15px var(--pink-glow);
+  border: 3px solid var(--pink-strong);
+  box-shadow: 0 0 15px var(--pink-glow-1);
+}
+
+.password-form__main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
 }
 
 .password-form__title {
-  color: #fff;
-  font-size: 1.4rem;
-  margin: 0 0 10px 0;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  color: #ffffff;
+  font-size: 1.6rem;
+  margin: 0;
+  font-weight: 600;
+  text-shadow: 0 0 8px var(--pink-glow-1);
+}
+
+/* Ô nhập mật khẩu */
+.password-form__input-wrapper {
+  width: 100%;
+  max-width: 280px;
 }
 
 .password-form__input {
-  width: 180px;
-  height: 45px;
-  border-radius: 25px;
-  border: none;
-  background: rgba(255,255,255,0.8);
-  text-align: center;
+  width: 100%;
+  padding: 12px;
   font-size: 1.5rem;
   letter-spacing: 5px;
-  color: #333;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  color: #fff;
   outline: none;
-  box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
 }
 
-.password-form__input.correct {
-  background: #d4edda;
-  border: 2px solid #28a745;
+.password-form__input:focus {
+  border-color: var(--pink-strong);
+  box-shadow: 0 0 15px var(--pink-glow-1);
 }
 
-.password-form__input.incorrect {
-  animation: shake 0.4s ease;
-  background: #f8d7da;
-  border: 2px solid #dc3545;
-}
-
+/* BÀN PHÍM SỐ BẤM: Gom cụm 3 cột chuẩn điện thoại */
 .keypad {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 15px;
+  width: 100%;
+  max-width: 280px;
   margin-top: 10px;
 }
 
+/* NÚT BẤM SỐ: Fix lỗi bị kéo dãn to đùng */
 .keypad__button {
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255, 255, 255, 0.25);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
   font-size: 1.3rem;
-  font-weight: bold;
+  font-weight: 600;
+  padding: 15px 0;
+  border-radius: 14px;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
 
-.keypad__button:active {
-  background: var(--pink-glow);
-  transform: scale(0.9);
+.keypad__button:active, .keypad__button:hover {
+  background: var(--pink-strong);
+  color: #fff;
+  box-shadow: 0 0 15px var(--pink-strong);
+  transform: scale(1.05);
 }
 
+/* Nút xóa đặc biệt */
+.keypad__button[data-action="clear"] {
+  background: rgba(255, 59, 48, 0.2);
+  border-color: rgba(255, 59, 48, 0.4);
+}
+.keypad__button[data-action="clear"]:active {
+  background: #ff3b30;
+  box-shadow: 0 0 15px #ff3b30;
+}
+
+/* Nút OK đặc biệt */
 .keypad__button[data-action="submit"] {
-  background: rgba(40, 167, 69, 0.6);
+  background: rgba(52, 199, 89, 0.2);
+  border-color: rgba(52, 199, 89, 0.4);
+}
+.keypad__button[data-action="submit"]:active {
+  background: #34c759;
+  box-shadow: 0 0 15px #34c759;
+}
+
+/* Hiệu ứng trạng thái khi nhập đúng/sai */
+.password-form__input.correct {
+  border-color: #2ecc71;
+  box-shadow: 0 0 15px #2ecc71;
+  background: rgba(46, 204, 113, 0.2);
+}
+
+.password-form__input.incorrect {
+  border-color: #e74c3c;
+  box-shadow: 0 0 15px #e74c3c;
+  background: rgba(231, 76, 60, 0.2);
+  animation: shake 0.4s ease;
 }
 
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-8px); }
-  75% { transform: translateX(8px); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
 }
 
+/* Hạt tim bay lãng mạn phía nền */
 .heart-particle {
   position: absolute;
   top: -20px;
   width: 15px;
   height: 15px;
-  background: #ff66b2;
+  background-color: var(--pink-strong);
   clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
-  opacity: 0.4;
-  animation: fall linear infinite;
+  animation: floatUp 8s linear infinite;
+  opacity: 0.6;
+  pointer-events: none;
 }
 
-@keyframes fall {
-  to { transform: translateY(105vh) rotate(360deg); }
+@keyframes floatUp {
+  0% { transform: translateY(105vh) rotate(0deg) scale(1); opacity: 0.6; }
+  100% { transform: translateY(-10vh) rotate(360deg) scale(0.6); opacity: 0; }
+}
+
+/* Tự động tối ưu giao diện nằm ngang khi dùng máy tính (PC) */
+@media screen and (min-width: 768px) {
+  .password-form {
+    flex-direction: row; /* Trở lại hàng ngang sang trọng trên PC */
+    max-width: 650px;
+    padding: 40px;
+    gap: 40px;
+  }
+  .password-form__avatar {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
