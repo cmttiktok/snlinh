@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
   const CORRECT_PASSWORD = '271108';
   const MAX_LENGTH = 6;
 
@@ -22,8 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (enteredPassword === CORRECT_PASSWORD) {
       passwordInput.classList.add('correct');
-      alert('Mật khẩu đúng! Chuẩn bị đón bất ngờ nè!!');
-      window.location.href = 'sinhnhat.html';
+      alert('Đúng ngày sinh rồi ! Bấm ok nhé Yến Linh!!');
+      window.location.href = 'sinhnhat.html'; // Chuyển hướng đến trang thư tình
     } else {
       passwordInput.classList.add('incorrect');
       setTimeout(() => {
