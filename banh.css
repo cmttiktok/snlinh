@@ -1,3 +1,6 @@
+@import url('https://fonts.cdnfonts.com/css/ica-rubrik-black');
+@import url('https://fonts.cdnfonts.com/css/poppins');
+
 /* Reset */
 * {
   margin: 0;
@@ -5,18 +8,19 @@
   box-sizing: border-box;
 }
 
+/* Body Styles */
 body {
-  background-color: #0d0d0d;
+  background-color: #000;
   position: relative;
   font-family: 'Poppins', sans-serif;
   overflow: hidden;
-  min-height: 100vh;
-  touch-action: none;
+  touch-action: none; /* Chống giật màn hình khi vuốt trên điện thoại */
 }
 
 body::before {
   content: '';
   position: absolute;
+  top: 0; left: 0;
   width: 100%; height: 100%;
   background: linear-gradient(45deg, #ff3cac, #784ba0, #2b86c5, #ff3cac);
   background-size: 400%;
@@ -31,125 +35,50 @@ body::before {
   100% { background-position: 0% 50%; }
 }
 
-#fireworks {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-
+/* Khung Banner chính */
 .banner {
   width: 100%;
   height: 100vh;
+  text-align: center;
   position: relative;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  perspective: 1000px; /* Độ sâu chuẩn 3D cho mobile */
+  perspective: 1200px; /* Tăng độ sâu 3D sắc nét */
 }
 
-/* Hiệu ứng hộp quà lắc lư cực hot */
-#gift-box-container {
-  position: absolute;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Nút mở quà gốc của bạn - được thêm hiệu ứng lắc lư lôi cuốn */
+#giftBtn {
+  padding: 15px 35px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(45deg, #ff3cac, #ff66b2);
+  border: none;
+  border-radius: 50px;
   cursor: pointer;
-}
-
-.gift-box {
-  width: 100px;
-  height: 100px;
-  position: relative;
+  box-shadow: 0 0 20px rgba(255, 60, 172, 0.6);
+  z-index: 100;
   animation: boxShake 1.5s infinite ease-in-out;
-}
-
-.box-lid {
-  width: 110px;
-  height: 25px;
-  background: #ff3366;
-  position: absolute;
-  top: 0; left: -5px;
-  border-radius: 4px;
-  box-shadow: 0 4px 5px rgba(0,0,0,0.2);
-  z-index: 2;
-  transition: transform 0.5s ease;
-}
-
-.box-body {
-  width: 100px;
-  height: 80px;
-  background: #ffcc00;
-  position: absolute;
-  bottom: 0;
-  border-radius: 0 0 8px 8px;
-}
-
-.box-body::before {
-  content: '';
-  width: 20px; height: 100%;
-  background: #ff3366;
-  position: absolute;
-  left: 40px;
-}
-
-#gift-box-container.open .box-lid {
-  transform: translateY(-60px) rotate(-20deg);
-  opacity: 0;
-}
-
-#gift-box-container.open {
-  transform: scale(0);
-  opacity: 0;
-  transition: all 0.5s ease-out;
-}
-
-.gift-hint {
-  color: #fff;
-  margin-top: 15px;
-  font-size: 0.9rem;
-  text-shadow: 0 0 10px #ff3cac;
-  animation: pulse 1.5s infinite;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @keyframes boxShake {
-  0%, 100% { transform: rotate(0); }
-  20% { transform: rotate(-8deg); }
-  40% { transform: rotate(8deg); }
-  60% { transform: rotate(-5deg); }
-  80% { transform: rotate(5deg); }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(255, 60, 172, 0.9); }
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
-
-/* Tiêu đề Chúc mừng Phát sáng Neon */
-#hbdText {
-  position: absolute;
-  top: 12%;
-  color: #fff;
-  font-size: 1.6rem;
-  font-weight: bold;
-  text-align: center;
-  width: 90%;
-  text-shadow: 0 0 10px #ff3cac, 0 0 20px #ff3cac, 0 0 30px #ff3cac;
-  z-index: 5;
-  transition: opacity 1s ease;
-}
-
-/* Khung ảnh Slider 3D tối ưu cho màn hình Điện thoại Dọc */
+/* Vòng xoay ảnh Slider 3D - Đã fix lỗi đè ảnh trên Mobile */
 .slider {
   position: absolute;
-  width: 120px;
-  height: 160px;
-  top: 35%;
+  width: 150px;
+  height: 200px;
+  top: 30%;
   transform-style: preserve-3d;
   animation: rotation 25s linear infinite;
-  z-index: 4;
+  z-index: 10;
+  will-change: transform; /* Ép điện thoại dùng card đồ họa để xử lý mượt */
 }
 
 @keyframes rotation {
@@ -160,9 +89,9 @@ body::before {
 .slider .item {
   position: absolute;
   inset: 0;
-  transform: rotateY(calc( (var(--position) - 1) * (360deg / var(--quantity)) )) translateZ(220px); /* Tỉ lệ rút gọn để ôm khít màn hình dọc điện thoại */
+  transform: rotateY(calc( (var(--position) - 1) * (360deg / var(--quantity)) )) translateZ(280px);
   backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; /* Fix lỗi nhấp nháy ảnh trên Safari iPhone */
 }
 
 .slider .item img {
@@ -170,19 +99,39 @@ body::before {
   height: 100%;
   object-fit: cover;
   border-radius: 12px;
-  border: 2px solid rgba(255,255,255,0.5);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  border: 2px solid rgba(255,255,255,0.6);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.6);
 }
 
-/* Bánh sinh nhật đặt dưới chân vững chãi */
+/* Chữ chúc mừng Neon */
+#hbdText {
+  position: absolute;
+  top: 10%;
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: bold;
+  width: 90%;
+  text-shadow: 0 0 10px #ff3cac, 0 0 20px #ff3cac;
+  z-index: 20;
+}
+
+/* Bánh sinh nhật chuẩn tọa độ không lo lệch dòng máy */
 .cake {
   position: absolute;
   bottom: 5%;
-  width: 180px;
-  height: 180px;
+  width: 220px;
+  height: 220px;
   object-fit: contain;
-  z-index: 5;
-  transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 15;
+  transition: all 1s ease-in-out;
+}
+
+#fireworks {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .hidden {
@@ -190,22 +139,16 @@ body::before {
   opacity: 0;
 }
 
-/* Điều chỉnh lại kích thước mượt mà khi xem trên máy tính lớn (PC) */
+/* Tự động co giãn mượt mà khi xem trên máy tính lớn (PC) */
 @media screen and (min-width: 768px) {
   .slider {
-    width: 180px;
-    height: 240px;
-    top: 30%;
+    width: 200px;
+    height: 250px;
+    top: 25%;
   }
   .slider .item {
-    transform: rotateY(calc( (var(--position) - 1) * (360deg / var(--quantity)) )) translateZ(350px);
+    transform: rotateY(calc( (var(--position) - 1) * (360deg / var(--quantity)) )) translateZ(380px);
   }
-  #hbdText {
-    font-size: 2.8rem;
-  }
-  .cake {
-    width: 260px;
-    height: 260px;
-    bottom: 8%;
-  }
+  #hbdText { font-size: 3rem; }
+  .cake { width: 320px; height: 320px; bottom: 5%; }
 }
